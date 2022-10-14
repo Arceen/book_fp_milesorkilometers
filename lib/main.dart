@@ -51,6 +51,7 @@ class MyAppState extends State<MyApp> {
   }
 
   void convert(double value, String from, String to) {
+    print("comes here");
     int? nFrom = _measuresMap[from];
     int? nTo = _measuresMap[to];
     var multiplier = _formulas[nFrom.toString()][nTo];
@@ -59,6 +60,8 @@ class MyAppState extends State<MyApp> {
     if (result == 0) {
       _resultMessage = 'This conversion cannot be performed';
     } else {
+      print("comes to else");
+      print(result);
       _resultMessage =
           '${_numberFrom.toString()} $_startMeasure are ${result.toString()} $_convertedMeasure';
     }
@@ -93,7 +96,6 @@ class MyAppState extends State<MyApp> {
             child: Column(
               children: [
                 Text('Value', style: labelStyle),
-                Spacer(),
                 TextField(
                   style: inputStyle,
                   decoration: InputDecoration(
@@ -107,7 +109,6 @@ class MyAppState extends State<MyApp> {
                     }
                   },
                 ),
-                Spacer(),
                 Text(
                   'From',
                   style: labelStyle,
@@ -125,7 +126,6 @@ class MyAppState extends State<MyApp> {
                         _startMeasure = value;
                       });
                     }),
-                Spacer(),
                 Text(
                   'To',
                   style: labelStyle,
@@ -143,11 +143,8 @@ class MyAppState extends State<MyApp> {
                         _convertedMeasure = value;
                       });
                     }),
-                Spacer(
-                  flex: 2,
-                ),
                 ElevatedButton(
-                  onPressed: () => () {
+                  onPressed: () {
                     if (_startMeasure!.isEmpty ||
                         _convertedMeasure!.isEmpty ||
                         _numberFrom == 0) {
@@ -161,14 +158,8 @@ class MyAppState extends State<MyApp> {
                     style: inputStyle,
                   ),
                 ),
-                Spacer(
-                  flex: 2,
-                ),
-                Text((_numberFrom == null) ? '' : _numberFrom.toString(),
+                Text((_resultMessage == null) ? '' : _resultMessage!,
                     style: labelStyle),
-                Spacer(
-                  flex: 8,
-                ),
               ],
             ),
           ),
